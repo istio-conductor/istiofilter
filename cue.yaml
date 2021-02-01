@@ -1,0 +1,20 @@
+# Cuelang configuration to generate OpenAPI schema for Istio configs.
+
+module: github.com/istio-conductor/istiofilter
+
+openapi:
+  selfContained: true
+  fieldFilter: "min.*|max.*"
+
+directories:
+  api/v1alpha1:
+    - mode: perFile
+
+
+
+# All is used when generating all types referenced in the above directories to
+# one file.
+all:
+  title: All Istio types.
+  version: v1alpha1
+  oapiFilename: istio.gen.json

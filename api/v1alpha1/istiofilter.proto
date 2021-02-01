@@ -1,0 +1,105 @@
+syntax = "proto3";
+import "google/protobuf/struct.proto";
+
+// $schema: istio-filter.istio-conductor.org.v1alpha1.IstioFilter
+// $title: istio filter
+// $description: Istio configuration filter.
+
+// `IstioFilter` defines filters that apply to istio configuration.
+package istio_filter.istio_conductor.org.v1alpha1;
+
+option go_package = "github.com/istio-conductor/istiofilter/api/v1alpha1";
+
+// IstioFilter defines filters that apply to istio configuration.
+//
+// <!-- crd generation tags
+// +cue-gen:IstioFilter:groupName:istio-conductor.org
+// +cue-gen:IstioFilter:version:v1alpha1
+// +cue-gen:IstioFilter:storageVersion
+// +cue-gen:IstioFilter:subresource:status
+// +cue-gen:IstioFilter:scope:Namespaced
+// +cue-gen:IstioFilter:resource:categories=istio-conductor-org,shortNames=if
+// +cue-gen:IstioFilter:printerColumn:name=Schema,type=string,JSONPath=.spec.schema,description="Istio Filter kind"
+// +cue-gen:IstioFilter:printerColumn:name=Age,type=date,JSONPath=.metadata.creationTimestamp,description="CreationTimestamp is a timestamp
+// representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations.
+// Clients may not set this value. It is represented in RFC3339 form and is in UTC.
+// Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata"
+// +cue-gen:IstioFilter:preserveUnknownFields:true
+// -->
+//
+// <!-- go code generation tags
+// +kubetype-gen
+// +kubetype-gen:groupVersion=istio-conductor.org/v1alpha1
+// +genclient
+// +k8s:deepcopy-gen=true
+// -->
+message IstioFilter {
+    // schema
+    Schema schema = 1;
+    repeated Selector selectors = 2;
+    repeated Change changes = 3;
+
+    enum Schema {
+        DESTINATION_RULE = 0;
+        VIRTUAL_SERVICE = 1;
+    }
+
+    message Selector {
+        map<string, string> labelSelector = 1;
+        string name = 2;
+        string namespace = 3;
+    }
+
+    enum Context {
+        OUTLIER_DETECTION = 0;
+        CONNECTION_POOL = 1;
+        LOAD_BALANCER = 2;
+        HTTP_ROUTE = 3;
+        HTTP_ROUTE_FAULT = 4;
+    }
+
+    message Change {
+        Context applyTo = 1;
+        Match match = 2;
+        Patch patch = 3;
+    }
+
+    enum SimpleMatch {
+        ALL = 0;
+        DEFAULT = 1;
+    }
+
+    message StringMatch {
+        oneof match {
+            string exact = 1;
+            string prefix = 2;
+            string suffix = 3;
+            string regex = 4;
+        }
+    }
+
+    message Match {
+        oneof match {
+            SimpleMatch simple = 1;
+            SelectorMatch selector = 2;
+        }
+    }
+
+    message SelectorMatch {
+        StringMatch name = 1;
+        map<string, string> labels = 2;
+    }
+
+    message Patch {
+        Operation operation = 1;
+        google.protobuf.Struct value = 2;
+    }
+
+    enum Operation {
+        MERGE = 0;
+        REPLACE = 1;
+        REMOVE = 2;
+        INSERT_BEFORE = 3;
+        INSERT_AFTER = 4;
+    }
+}

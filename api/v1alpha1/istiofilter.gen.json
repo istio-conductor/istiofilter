@@ -1,0 +1,276 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Istio configuration filter.",
+    "version": "v1alpha1"
+  },
+  "components": {
+    "schemas": {
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter": {
+        "description": "IstioFilter defines filters that apply to istio configuration.",
+        "type": "object",
+        "properties": {
+          "schema": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Schema"
+          },
+          "selectors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Selector"
+            }
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Change"
+            }
+          }
+        }
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Schema": {
+        "type": "string",
+        "enum": [
+          "DESTINATION_RULE",
+          "VIRTUAL_SERVICE"
+        ]
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Selector": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "string"
+          },
+          "labelSelector": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "namespace": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Change": {
+        "type": "object",
+        "properties": {
+          "applyTo": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Context"
+          },
+          "match": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Match"
+          },
+          "patch": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Patch"
+          }
+        }
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Context": {
+        "type": "string",
+        "enum": [
+          "OUTLIER_DETECTION",
+          "CONNECTION_POOL",
+          "LOAD_BALANCER",
+          "HTTP_ROUTE",
+          "HTTP_ROUTE_FAULT"
+        ]
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Match": {
+        "type": "object",
+        "oneOf": [
+          {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "simple"
+                  ],
+                  "properties": {
+                    "simple": {
+                      "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "selector"
+                  ],
+                  "properties": {
+                    "selector": {
+                      "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "required": [
+              "simple"
+            ],
+            "properties": {
+              "simple": {
+                "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
+              }
+            }
+          },
+          {
+            "required": [
+              "selector"
+            ],
+            "properties": {
+              "selector": {
+                "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
+              }
+            }
+          }
+        ]
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Patch": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Operation"
+          },
+          "value": {
+            "type": "object"
+          }
+        }
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch": {
+        "type": "string",
+        "enum": [
+          "ALL",
+          "DEFAULT"
+        ]
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.StringMatch": {
+        "type": "object",
+        "oneOf": [
+          {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "exact"
+                  ],
+                  "properties": {
+                    "exact": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "prefix"
+                  ],
+                  "properties": {
+                    "prefix": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "suffix"
+                  ],
+                  "properties": {
+                    "suffix": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "regex"
+                  ],
+                  "properties": {
+                    "regex": {
+                      "type": "string",
+                      "format": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "required": [
+              "exact"
+            ],
+            "properties": {
+              "exact": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          },
+          {
+            "required": [
+              "prefix"
+            ],
+            "properties": {
+              "prefix": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          },
+          {
+            "required": [
+              "suffix"
+            ],
+            "properties": {
+              "suffix": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          },
+          {
+            "required": [
+              "regex"
+            ],
+            "properties": {
+              "regex": {
+                "type": "string",
+                "format": "string"
+              }
+            }
+          }
+        ]
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.StringMatch"
+          },
+          "labels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        }
+      },
+      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Operation": {
+        "type": "string",
+        "enum": [
+          "MERGE",
+          "REPLACE",
+          "REMOVE",
+          "INSERT_BEFORE",
+          "INSERT_AFTER"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "definitions": [
+    {
+      "protopath": "api:/:v1alpha1:/:istiofilter.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "IstioFilter.Schema",
+            "enum_fields": [
+              {
+                "name": "DESTINATION_RULE"
+              },
+              {
+                "name": "VIRTUAL_SERVICE",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "IstioFilter.Context",
+            "enum_fields": [
+              {
+                "name": "OUTLIER_DETECTION"
+              },
+              {
+                "name": "CONNECTION_POOL",
+                "integer": 1
+              },
+              {
+                "name": "LOAD_BALANCER",
+                "integer": 2
+              },
+              {
+                "name": "HTTP_ROUTE",
+                "integer": 3
+              },
+              {
+                "name": "HTTP_ROUTE_FAULT",
+                "integer": 4
+              }
+            ]
+          },
+          {
+            "name": "IstioFilter.SimpleMatch",
+            "enum_fields": [
+              {
+                "name": "ALL"
+              },
+              {
+                "name": "DEFAULT",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "IstioFilter.Operation",
+            "enum_fields": [
+              {
+                "name": "MERGE"
+              },
+              {
+                "name": "REPLACE",
+                "integer": 1
+              },
+              {
+                "name": "REMOVE",
+                "integer": 2
+              },
+              {
+                "name": "INSERT_BEFORE",
+                "integer": 3
+              },
+              {
+                "name": "INSERT_AFTER",
+                "integer": 4
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "IstioFilter",
+            "fields": [
+              {
+                "id": 1,
+                "name": "schema",
+                "type": "Schema"
+              },
+              {
+                "id": 2,
+                "name": "selectors",
+                "type": "Selector",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "changes",
+                "type": "Change",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "Selector",
+                "fields": [
+                  {
+                    "id": 2,
+                    "name": "name",
+                    "type": "string"
+                  },
+                  {
+                    "id": 3,
+                    "name": "namespace",
+                    "type": "string"
+                  }
+                ],
+                "maps": [
+                  {
+                    "key_type": "string",
+                    "field": {
+                      "id": 1,
+                      "name": "labelSelector",
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Change",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "applyTo",
+                    "type": "Context"
+                  },
+                  {
+                    "id": 2,
+                    "name": "match",
+                    "type": "Match"
+                  },
+                  {
+                    "id": 3,
+                    "name": "patch",
+                    "type": "Patch"
+                  }
+                ]
+              },
+              {
+                "name": "StringMatch",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "exact",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "prefix",
+                    "type": "string"
+                  },
+                  {
+                    "id": 3,
+                    "name": "suffix",
+                    "type": "string"
+                  },
+                  {
+                    "id": 4,
+                    "name": "regex",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "name": "Match",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "simple",
+                    "type": "SimpleMatch"
+                  },
+                  {
+                    "id": 2,
+                    "name": "selector",
+                    "type": "SelectorMatch"
+                  }
+                ]
+              },
+              {
+                "name": "SelectorMatch",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "name",
+                    "type": "StringMatch"
+                  }
+                ],
+                "maps": [
+                  {
+                    "key_type": "string",
+                    "field": {
+                      "id": 2,
+                      "name": "labels",
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Patch",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "operation",
+                    "type": "Operation"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "google.protobuf.Struct"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "google/protobuf/struct.proto"
+          }
+        ],
+        "package": {
+          "name": "istio_filter.istio_conductor.org.v1alpha1"
+        },
+        "options": [
+          {
+            "name": "go_package",
+            "value": "github.com/istio-conductor/istio-filter/api/v1alpha1"
+          }
+        ]
+      }
+    }
+  ]
+}
