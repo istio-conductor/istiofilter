@@ -129,7 +129,7 @@ spec:
       containers:
         - name: "istiofilter"
           image: istioconductor/istiofilter:${FILTER_VERSION}
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /root/cert
               name: cert

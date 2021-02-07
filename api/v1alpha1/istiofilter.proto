@@ -34,12 +34,16 @@ option go_package = "github.com/istio-conductor/istiofilter/api/v1alpha1";
 // +k8s:deepcopy-gen=true
 // -->
 message IstioFilter {
-    // schema
+    // Specifies the kind of istio application resource to be patched.
     Schema schema = 1;
+    // Used to select the specific istio application configurations.
     repeated Selector selectors = 2;
+    // Change to configuration.
     repeated Change changes = 3;
 
+    // Specifies the kind of istio application resource to be patched.
     enum Schema {
+        // https://istio.io/latest/docs/reference/config/networking/virtual-service/
         DESTINATION_RULE = 0;
         VIRTUAL_SERVICE = 1;
     }
