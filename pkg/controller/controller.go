@@ -1,14 +1,9 @@
 package controller
 
 import (
-	"context"
 	"reflect"
 
 	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
-	"github.com/sirupsen/logrus"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 	"sigs.k8s.io/controller-runtime/pkg/event"
@@ -24,19 +19,6 @@ func AddIstioFilter(mgr manager.Manager, privilegeNamespaces []string) error {
 	if err != nil {
 		return err
 	}
-	go func() {
-		watch, _ := dn.Resource(schema.GroupVersionResource{
-			Group:    "istio-conductor.org",
-			Version:  "v1alpha1",
-			Resource: "istiofilters",
-		}).Namespace("go-grpc-test-core").Watch(context.Background(), metav1.ListOptions{})
-		for e := range watch.ResultChan() {
-			un, ok := e.Object.(*unstructured.Unstructured)
-			if ok {
-				logrus.Info(un.Object["spec"])
-			}
-		}
-	}()
 
 	filterController := NewIstioFilterController(privilegeNamespaces, mgr.GetClient(), dn)
 	c, err := controller.New("istio-conductor-filter-controller", mgr, controller.Options{Reconciler: filterController})

@@ -57,7 +57,7 @@ rules:
       - watch
       - list
   - apiGroups:
-      - configuration.istio-conductor.org/v1alpha1
+      - configuration.istio-conductor.org
     resources:
       - '*'
     verbs:
