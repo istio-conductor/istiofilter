@@ -1,0 +1,20 @@
+---
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: productpage-mirror
+spec:
+  schema: VIRTUAL_SERVICE
+  selectors:
+    - name: productpage
+  changes:
+    - match:
+        simple: DEFAULT
+      applyTo: HTTP_ROUTE
+      patch:
+        operation: MERGE
+        value:
+          mirror:
+            host: productpage
+            subset: v2
+          mirror_percent: 100

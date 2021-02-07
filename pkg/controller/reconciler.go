@@ -8,7 +8,7 @@ import (
 	"time"
 
 	api "github.com/istio-conductor/istiofilter/api/v1alpha1"
-	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/istiofilter/v1alpha1"
+	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
 	"github.com/istio-conductor/istiofilter/pkg/annotation"
 	"github.com/sirupsen/logrus"
 	"istio.io/istio/pkg/config/schema/collections"
@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
 
-const finalizer = "finalizer.istiofilter.istio-conductor.org"
+const finalizer = "finalizer.istiofilter.configuration.istio-conductor.org"
 const finalizerMaxRetries = 2
 
 type IstioFilterController struct {

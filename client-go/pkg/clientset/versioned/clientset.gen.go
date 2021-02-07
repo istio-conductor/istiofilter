@@ -18,7 +18,7 @@ package versioned
 import (
 	"fmt"
 
-	istiofilterv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/istiofilter/v1alpha1"
+	configurationv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/configuration/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -26,19 +26,19 @@ import (
 
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
-	IstiofilterV1alpha1() istiofilterv1alpha1.IstiofilterV1alpha1Interface
+	ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV1alpha1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
 // version included in a Clientset.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	istiofilterV1alpha1 *istiofilterv1alpha1.IstiofilterV1alpha1Client
+	configurationV1alpha1 *configurationv1alpha1.ConfigurationV1alpha1Client
 }
 
-// IstiofilterV1alpha1 retrieves the IstiofilterV1alpha1Client
-func (c *Clientset) IstiofilterV1alpha1() istiofilterv1alpha1.IstiofilterV1alpha1Interface {
-	return c.istiofilterV1alpha1
+// ConfigurationV1alpha1 retrieves the ConfigurationV1alpha1Client
+func (c *Clientset) ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV1alpha1Interface {
+	return c.configurationV1alpha1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -62,7 +62,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
-	cs.istiofilterV1alpha1, err = istiofilterv1alpha1.NewForConfig(&configShallowCopy)
+	cs.configurationV1alpha1, err = configurationv1alpha1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 // panics if there is an error in the config.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
-	cs.istiofilterV1alpha1 = istiofilterv1alpha1.NewForConfigOrDie(c)
+	cs.configurationV1alpha1 = configurationv1alpha1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -87,7 +87,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 // New creates a new Clientset for the given RESTClient.
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
-	cs.istiofilterV1alpha1 = istiofilterv1alpha1.New(c)
+	cs.configurationV1alpha1 = configurationv1alpha1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

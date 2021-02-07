@@ -3,10 +3,10 @@ package informer
 import (
 	"context"
 	"github.com/istio-conductor/istiofilter/api/v1alpha1"
-	k8sv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/apis/istiofilter/v1alpha1"
+	k8sv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
 	"github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned"
 	"github.com/istio-conductor/istiofilter/client-go/pkg/informers/externalversions"
-	listerv1 "github.com/istio-conductor/istiofilter/client-go/pkg/listers/istiofilter/v1alpha1"
+	listerv1 "github.com/istio-conductor/istiofilter/client-go/pkg/listers/configuration/v1alpha1"
 	"istio.io/istio/pkg/config/labels"
 	"istio.io/istio/pkg/config/schema/collections"
 	klabels "k8s.io/apimachinery/pkg/labels"
@@ -37,7 +37,7 @@ func New(privilegeNamespaces []string, cfg *rest.Config) (*Store, error) {
 func (s *Store) Start(stop <-chan struct{}) {
 	factory := externalversions.NewSharedInformerFactory(s.cli, time.Minute)
 	s.factory = factory
-	s.lister = factory.Istiofilter().V1alpha1().IstioFilters().Lister()
+	s.lister = factory.Configuration().V1alpha1().IstioFilters().Lister()
 	factory.Start(stop)
 	factory.WaitForCacheSync(stop)
 }

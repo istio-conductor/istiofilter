@@ -1,0 +1,23 @@
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: reviews-route-fault
+spec:
+  schema: VIRTUAL_SERVICE
+  selectors:
+    - name: reviews-route
+  changes:
+    - applyTo: HTTP_ROUTE
+      match:
+        selector:
+          name:
+            exact: reviews-v2-routes
+      patch:
+        operation: MERGE
+        value:
+          fault:
+            delay:
+              percentage:
+                value: 0.1
+              fixedDelay: 5s
+

@@ -6,35 +6,35 @@
   },
   "components": {
     "schemas": {
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter": {
         "description": "IstioFilter defines filters that apply to istio configuration.",
         "type": "object",
         "properties": {
           "schema": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Schema"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Schema"
           },
           "selectors": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Selector"
+              "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Selector"
             }
           },
           "changes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Change"
+              "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Change"
             }
           }
         }
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Schema": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Schema": {
         "type": "string",
         "enum": [
           "DESTINATION_RULE",
           "VIRTUAL_SERVICE"
         ]
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Selector": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Selector": {
         "type": "object",
         "properties": {
           "name": {
@@ -54,21 +54,21 @@
           }
         }
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Change": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Change": {
         "type": "object",
         "properties": {
           "applyTo": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Context"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Context"
           },
           "match": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Match"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Match"
           },
           "patch": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Patch"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Patch"
           }
         }
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Context": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Context": {
         "type": "string",
         "enum": [
           "OUTLIER_DETECTION",
@@ -78,7 +78,7 @@
           "HTTP_ROUTE_FAULT"
         ]
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Match": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Match": {
         "type": "object",
         "oneOf": [
           {
@@ -90,7 +90,7 @@
                   ],
                   "properties": {
                     "simple": {
-                      "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
+                      "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
                     }
                   }
                 },
@@ -100,7 +100,7 @@
                   ],
                   "properties": {
                     "selector": {
-                      "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
+                      "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
                     }
                   }
                 }
@@ -113,7 +113,7 @@
             ],
             "properties": {
               "simple": {
-                "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
+                "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch"
               }
             }
           },
@@ -123,31 +123,31 @@
             ],
             "properties": {
               "selector": {
-                "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
+                "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch"
               }
             }
           }
         ]
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Patch": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Patch": {
         "type": "object",
         "properties": {
           "operation": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Operation"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Operation"
           },
           "value": {
             "type": "object"
           }
         }
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SimpleMatch": {
         "type": "string",
         "enum": [
           "ALL",
           "DEFAULT"
         ]
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.StringMatch": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.StringMatch": {
         "type": "object",
         "oneOf": [
           {
@@ -246,11 +246,11 @@
           }
         ]
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.SelectorMatch": {
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/components/schemas/istio_filter.istio_conductor.org.v1alpha1.IstioFilter.StringMatch"
+            "$ref": "#/components/schemas/istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.StringMatch"
           },
           "labels": {
             "type": "object",
@@ -261,7 +261,7 @@
           }
         }
       },
-      "istio_filter.istio_conductor.org.v1alpha1.IstioFilter.Operation": {
+      "istio_filter.configuration.istio_conductor.org.v1alpha1.IstioFilter.Operation": {
         "type": "string",
         "enum": [
           "MERGE",

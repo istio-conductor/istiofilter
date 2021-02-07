@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/istiofilter/v1alpha1"
+	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
 )
 
 type Store interface {

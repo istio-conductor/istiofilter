@@ -4,7 +4,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/istiofilter/v1alpha1"
+	"github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
 	"github.com/sirupsen/logrus"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"

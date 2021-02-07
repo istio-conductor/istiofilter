@@ -18,7 +18,7 @@ package externalversions
 import (
 	"fmt"
 
-	v1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/apis/istiofilter/v1alpha1"
+	v1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/apis/configuration/v1alpha1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -49,9 +49,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=istiofilter.istio-conductor.org, Version=v1alpha1
+	// Group=configuration.istio-conductor.org, Version=v1alpha1
 	case v1alpha1.SchemeGroupVersion.WithResource("istiofilters"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Istiofilter().V1alpha1().IstioFilters().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Configuration().V1alpha1().IstioFilters().Informer()}, nil
 
 	}
 

@@ -17,8 +17,8 @@ package fake
 
 import (
 	clientset "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned"
-	istiofilterv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/istiofilter/v1alpha1"
-	fakeistiofilterv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/istiofilter/v1alpha1/fake"
+	configurationv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/configuration/v1alpha1"
+	fakeconfigurationv1alpha1 "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned/typed/configuration/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -73,7 +73,7 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 
 var _ clientset.Interface = &Clientset{}
 
-// IstiofilterV1alpha1 retrieves the IstiofilterV1alpha1Client
-func (c *Clientset) IstiofilterV1alpha1() istiofilterv1alpha1.IstiofilterV1alpha1Interface {
-	return &fakeistiofilterv1alpha1.FakeIstiofilterV1alpha1{Fake: &c.Fake}
+// ConfigurationV1alpha1 retrieves the ConfigurationV1alpha1Client
+func (c *Clientset) ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV1alpha1Interface {
+	return &fakeconfigurationv1alpha1.FakeConfigurationV1alpha1{Fake: &c.Fake}
 }

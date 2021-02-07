@@ -20,7 +20,7 @@ replace github.com/imdario/mergo => github.com/imdario/mergo v0.3.5
 replace github.com/evanphx/json-patch => github.com/evanphx/json-patch v0.0.0-20190815234213-e83c0a1c26c8
 
 require (
-	github.com/ghodss/yaml v1.0.0
+	github.com/alessio/shellescape v1.4.1
 	github.com/gogo/protobuf v1.3.1
 	github.com/pascaldekloe/name v1.0.1
 	github.com/sirupsen/logrus v1.7.0
@@ -29,11 +29,8 @@ require (
 	github.com/spf13/pflag v1.0.5
 	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a
 	istio.io/api v0.0.0-20210106050357-a795af9d993e
-	istio.io/client-go v0.0.0-20200908160912-f99162621a1a // indirect
 	istio.io/istio v0.0.0-20210107030922-8e6386c46ffb
 	k8s.io/apimachinery v0.20.1
 	k8s.io/client-go v0.20.1
 	sigs.k8s.io/controller-runtime v0.7.0
-	sigs.k8s.io/structured-merge-diff v0.0.0-20190525122527-15d366b2352e // indirect
-	sigs.k8s.io/yaml v1.2.0 // indirect
 )

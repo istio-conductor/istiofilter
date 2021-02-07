@@ -1,0 +1,20 @@
+---
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: productpage-mirror
+spec:
+  schema: DESTINATION_RULE
+  selectors:
+    - name: productpage
+  changes:
+    - match:
+        simple: ALL
+      applyTo: OUTLIER_DETECTION
+      patch:
+        operation: MERGE
+        value:
+          consecutiveErrors: 1
+          interval: 1s
+          baseEjectionTime: 3m
+          maxEjectionPercent: 100

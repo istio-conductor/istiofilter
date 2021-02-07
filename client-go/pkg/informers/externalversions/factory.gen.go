@@ -21,8 +21,8 @@ import (
 	time "time"
 
 	versioned "github.com/istio-conductor/istiofilter/client-go/pkg/clientset/versioned"
+	configuration "github.com/istio-conductor/istiofilter/client-go/pkg/informers/externalversions/configuration"
 	internalinterfaces "github.com/istio-conductor/istiofilter/client-go/pkg/informers/externalversions/internalinterfaces"
-	istiofilter "github.com/istio-conductor/istiofilter/client-go/pkg/informers/externalversions/istiofilter"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -169,9 +169,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Istiofilter() istiofilter.Interface
+	Configuration() configuration.Interface
 }
 
-func (f *sharedInformerFactory) Istiofilter() istiofilter.Interface {
-	return istiofilter.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Configuration() configuration.Interface {
+	return configuration.New(f, f.namespace, f.tweakListOptions)
 }

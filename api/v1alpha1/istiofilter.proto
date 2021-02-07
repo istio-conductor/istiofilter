@@ -1,24 +1,24 @@
 syntax = "proto3";
 import "google/protobuf/struct.proto";
 
-// $schema: istio-filter.istio-conductor.org.v1alpha1.IstioFilter
+// $schema: istiofilter.configuration.istio-conductor.org.v1alpha1.IstioFilter
 // $title: istio filter
 // $description: Istio configuration filter.
 
 // `IstioFilter` defines filters that apply to istio configuration.
-package istio_filter.istio_conductor.org.v1alpha1;
+package istio_filter.configuration.istio_conductor.org.v1alpha1;
 
 option go_package = "github.com/istio-conductor/istiofilter/api/v1alpha1";
 
 // IstioFilter defines filters that apply to istio configuration.
 //
 // <!-- crd generation tags
-// +cue-gen:IstioFilter:groupName:istio-conductor.org
+// +cue-gen:IstioFilter:groupName:configuration.istio-conductor.org
 // +cue-gen:IstioFilter:version:v1alpha1
 // +cue-gen:IstioFilter:storageVersion
 // +cue-gen:IstioFilter:subresource:status
 // +cue-gen:IstioFilter:scope:Namespaced
-// +cue-gen:IstioFilter:resource:categories=istio-conductor-org,shortNames=if
+// +cue-gen:IstioFilter:resource:categories=configuration-istio-conductor-org,shortNames=if
 // +cue-gen:IstioFilter:printerColumn:name=Schema,type=string,JSONPath=.spec.schema,description="Istio Filter kind"
 // +cue-gen:IstioFilter:printerColumn:name=Age,type=date,JSONPath=.metadata.creationTimestamp,description="CreationTimestamp is a timestamp
 // representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations.
@@ -29,7 +29,7 @@ option go_package = "github.com/istio-conductor/istiofilter/api/v1alpha1";
 //
 // <!-- go code generation tags
 // +kubetype-gen
-// +kubetype-gen:groupVersion=istio-conductor.org/v1alpha1
+// +kubetype-gen:groupVersion=configuration.istio-conductor.org/v1alpha1
 // +genclient
 // +k8s:deepcopy-gen=true
 // -->

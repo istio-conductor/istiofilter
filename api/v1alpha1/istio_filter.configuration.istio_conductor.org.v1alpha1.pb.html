@@ -1,0 +1,572 @@
+---
+title: istio filter
+description: Istio configuration filter.
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+schema: istiofilter.configuration.istio-conductor.org.v1alpha1.IstioFilter
+number_of_entries: 16
+---
+<p><code>IstioFilter</code> defines filters that apply to istio configuration.</p>
+
+<h2 id="IstioFilter">IstioFilter</h2>
+<section>
+<p>IstioFilter defines filters that apply to istio configuration.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-schema">
+<td><code>schema</code></td>
+<td><code><a href="#IstioFilter-Schema">Schema</a></code></td>
+<td>
+<p>schema</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-selectors">
+<td><code>selectors</code></td>
+<td><code><a href="#IstioFilter-Selector">Selector[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-changes">
+<td><code>changes</code></td>
+<td><code><a href="#IstioFilter-Change">Change[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Selector">IstioFilter.Selector</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Selector-labelSelector">
+<td><code>labelSelector</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Selector-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Selector-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Change">IstioFilter.Change</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Change-applyTo">
+<td><code>applyTo</code></td>
+<td><code><a href="#IstioFilter-Context">Context</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Change-match">
+<td><code>match</code></td>
+<td><code><a href="#IstioFilter-Match">Match</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Change-patch">
+<td><code>patch</code></td>
+<td><code><a href="#IstioFilter-Patch">Patch</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-StringMatch">IstioFilter.StringMatch</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-StringMatch-exact" class="oneof oneof-start">
+<td><code>exact</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-StringMatch-prefix" class="oneof">
+<td><code>prefix</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-StringMatch-suffix" class="oneof">
+<td><code>suffix</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-StringMatch-regex" class="oneof">
+<td><code>regex</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Match">IstioFilter.Match</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Match-simple" class="oneof oneof-start">
+<td><code>simple</code></td>
+<td><code><a href="#IstioFilter-SimpleMatch">SimpleMatch (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Match-selector" class="oneof">
+<td><code>selector</code></td>
+<td><code><a href="#IstioFilter-SelectorMatch">SelectorMatch (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-SelectorMatch">IstioFilter.SelectorMatch</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-SelectorMatch-name">
+<td><code>name</code></td>
+<td><code><a href="#IstioFilter-StringMatch">StringMatch</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-SelectorMatch-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Patch">IstioFilter.Patch</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Patch-operation">
+<td><code>operation</code></td>
+<td><code><a href="#IstioFilter-Operation">Operation</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IstioFilter-Patch-value">
+<td><code>value</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct">Struct</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Schema">IstioFilter.Schema</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Schema-DESTINATION_RULE">
+<td><code>DESTINATION_RULE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Schema-VIRTUAL_SERVICE">
+<td><code>VIRTUAL_SERVICE</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Context">IstioFilter.Context</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Context-OUTLIER_DETECTION">
+<td><code>OUTLIER_DETECTION</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-CONNECTION_POOL">
+<td><code>CONNECTION_POOL</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-LOAD_BALANCER">
+<td><code>LOAD_BALANCER</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-HTTP_ROUTE">
+<td><code>HTTP_ROUTE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-HTTP_ROUTE_FAULT">
+<td><code>HTTP_ROUTE_FAULT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-SimpleMatch">IstioFilter.SimpleMatch</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-SimpleMatch-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-SimpleMatch-DEFAULT">
+<td><code>DEFAULT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Operation">IstioFilter.Operation</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Operation-MERGE">
+<td><code>MERGE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REPLACE">
+<td><code>REPLACE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REMOVE">
+<td><code>REMOVE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_BEFORE">
+<td><code>INSERT_BEFORE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_AFTER">
+<td><code>INSERT_AFTER</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Schema">IstioFilter.Schema</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Schema-DESTINATION_RULE">
+<td><code>DESTINATION_RULE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Schema-VIRTUAL_SERVICE">
+<td><code>VIRTUAL_SERVICE</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Context">IstioFilter.Context</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Context-OUTLIER_DETECTION">
+<td><code>OUTLIER_DETECTION</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-CONNECTION_POOL">
+<td><code>CONNECTION_POOL</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-LOAD_BALANCER">
+<td><code>LOAD_BALANCER</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-HTTP_ROUTE">
+<td><code>HTTP_ROUTE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Context-HTTP_ROUTE_FAULT">
+<td><code>HTTP_ROUTE_FAULT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-SimpleMatch">IstioFilter.SimpleMatch</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-SimpleMatch-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-SimpleMatch-DEFAULT">
+<td><code>DEFAULT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Operation">IstioFilter.Operation</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Operation-MERGE">
+<td><code>MERGE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REPLACE">
+<td><code>REPLACE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REMOVE">
+<td><code>REMOVE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_BEFORE">
+<td><code>INSERT_BEFORE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_AFTER">
+<td><code>INSERT_AFTER</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IstioFilter-Operation">IstioFilter.Operation</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IstioFilter-Operation-MERGE">
+<td><code>MERGE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REPLACE">
+<td><code>REPLACE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-REMOVE">
+<td><code>REMOVE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_BEFORE">
+<td><code>INSERT_BEFORE</code></td>
+<td>
+</td>
+</tr>
+<tr id="IstioFilter-Operation-INSERT_AFTER">
+<td><code>INSERT_AFTER</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
