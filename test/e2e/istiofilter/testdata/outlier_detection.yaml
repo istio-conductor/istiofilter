@@ -2,7 +2,7 @@
 apiVersion: configuration.istio-conductor.org/v1alpha1
 kind: IstioFilter
 metadata:
-  name: productpage-mirror
+  name: productpage-circuit-breaking
 spec:
   schema: DESTINATION_RULE
   selectors:
@@ -10,6 +10,28 @@ spec:
   changes:
     - match:
         simple: ALL
+      applyTo: OUTLIER_DETECTION
+      patch:
+        operation: MERGE
+        value:
+          consecutiveErrors: 1
+          interval: 1s
+          baseEjectionTime: 3m
+          maxEjectionPercent: 100
+---
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: reviews-circuit-breaking
+spec:
+  schema: DESTINATION_RULE
+  selectors:
+    - name: reviews
+  changes:
+    - match:
+        selector:
+          name:
+            exact: v1
       applyTo: OUTLIER_DETECTION
       patch:
         operation: MERGE
