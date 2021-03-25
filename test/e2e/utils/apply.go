@@ -15,6 +15,7 @@ func (k *KubectlContext) DeleteByFile(file string) (stdout string, err error) {
 	stdout, _, _, err = shell(s)
 	return stdout, err
 }
+
 func (k *KubectlContext) WaitAllDeployments() {
 	s := (kubectlContext)(*k).getCMD()
 	s += fmt.Sprintf(" wait --for=condition=available --timeout=60s --all deployments")

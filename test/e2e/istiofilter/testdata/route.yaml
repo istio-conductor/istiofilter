@@ -1,0 +1,44 @@
+---
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: productpage-route
+spec:
+  schema: VIRTUAL_SERVICE
+  selectors:
+    - name: productpage
+  changes:
+    - match:
+        simple: DEFAULT
+      applyTo: HTTP_ROUTE
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: route
+          route:
+            - destination:
+                host: productpage
+                subset: v1
+---
+apiVersion: configuration.istio-conductor.org/v1alpha1
+kind: IstioFilter
+metadata:
+  name: productpage-route2
+spec:
+  schema: VIRTUAL_SERVICE
+  selectors:
+    - name: productpage
+  changes:
+    - match:
+        selector:
+          name:
+            exact: route
+      applyTo: HTTP_ROUTE
+      patch:
+        operation: INSERT_AFTER
+        value:
+          name: route2
+          route:
+            - destination:
+                host: productpage
+                subset: v1

@@ -34,6 +34,9 @@ func clearBookInfo() {
 	utils.Kubectl().DeleteByFile("../bookinfo/bookinfo.yaml")
 	utils.Kubectl().DeleteByFile("../bookinfo/destination-rule-all.yaml")
 	utils.Kubectl().DeleteByFile("../bookinfo/virtual-service-all-v1.yaml")
+	utils.Kubectl().DeleteByFile("./testdata/mirror.yaml")
+	utils.Kubectl().DeleteByFile("./testdata/route.yaml")
+	utils.Kubectl().DeleteByFile("./testdata/outlier_detection.yaml")
 }
 
 func TestPatchVirtualService(t *testing.T) {
@@ -48,6 +51,7 @@ func TestPatchVirtualService(t *testing.T) {
 		t.Fatalf("excepted mirror: %s but got: %s", wanted, mirror)
 	}
 	utils.Kubectl().DeleteByFile("./testdata/mirror.yaml")
+	time.Sleep(time.Millisecond * 100)
 	mirror, err = utils.Kubectl().Get("VirtualService").ByName("productpage").ObjectField(".spec.http[0].mirror")
 	if err != nil {
 		t.Fatal(err)
@@ -55,6 +59,25 @@ func TestPatchVirtualService(t *testing.T) {
 	wanted = ""
 	if mirror != wanted {
 		t.Fatalf("excepted mirror: %s but got: %s", wanted, mirror)
+	}
+	utils.Kubectl().Apply("./testdata/route.yaml")
+	time.Sleep(time.Millisecond * 100)
+	routeName,err:=utils.Kubectl().Get("VirtualService").ByName("productpage").ObjectField(".spec.http[0].name")
+	wanted = "route"
+	if routeName!=wanted{
+		t.Fatalf("excepted first route name: %s but got: %s", wanted, routeName)
+	}
+
+	routeName,err=utils.Kubectl().Get("VirtualService").ByName("productpage").ObjectField(".spec.http[1].name")
+	wanted = "route2"
+	if routeName!=wanted{
+		t.Fatalf("excepted first route name: %s but got: %s", wanted, routeName)
+	}
+
+	routeName,err=utils.Kubectl().Get("VirtualService").ByName("productpage").ObjectField(".spec.http[2].name")
+	wanted = ""
+	if routeName!=wanted{
+		t.Fatalf("excepted first route name: %s but got: %s", wanted, routeName)
 	}
 }
 
