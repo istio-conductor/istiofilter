@@ -46,9 +46,14 @@ func changeRoute(vs *networking.VirtualService, change *v1alpha1.IstioFilter_Cha
 	case *v1alpha1.IstioFilter_Match_Simple:
 		switch change.Match.GetSimple() {
 		case v1alpha1.IstioFilter_ALL:
-			if change.Patch.Operation == v1alpha1.IstioFilter_REMOVE {
+			switch change.Patch.Operation {
+			case v1alpha1.IstioFilter_REMOVE,
+				v1alpha1.IstioFilter_REPLACE,
+				v1alpha1.IstioFilter_INSERT_BEFORE,
+				v1alpha1.IstioFilter_INSERT_AFTER:
 				return ErrUnsupportedOperation
 			}
+			// only support merge
 			for i, route := range vs.Http {
 				vs.Http[i], err = apply(route, change.Patch)
 				if err != nil {
@@ -62,41 +67,56 @@ func changeRoute(vs *networking.VirtualService, change *v1alpha1.IstioFilter_Cha
 			if defaultRoute == nil {
 				return nil
 			}
-			vs.Http[defaultIndex], err = apply(defaultRoute, change.Patch)
+			applied, err := apply(defaultRoute, change.Patch)
 			if err != nil {
 				return err
 			}
+			switch change.Patch.Operation {
+			case v1alpha1.IstioFilter_INSERT_BEFORE:
+				temp := append(make([]*networking.HTTPRoute, 0, len(vs.Http)+1), vs.Http[:defaultIndex]...)
+				temp = append(temp, applied)
+				temp = append(temp, vs.Http[defaultIndex:]...)
+				vs.Http = temp
+			case v1alpha1.IstioFilter_INSERT_AFTER:
+				temp := append(make([]*networking.HTTPRoute, 0, len(vs.Http)+1), vs.Http[:defaultIndex+1]...)
+				temp = append(temp, applied)
+				temp = append(temp, vs.Http[defaultIndex+1:]...)
+				vs.Http = temp
+			case v1alpha1.IstioFilter_MERGE, v1alpha1.IstioFilter_REPLACE:
+				vs.Http[defaultIndex] = applied
+			}
 		}
 	case *v1alpha1.IstioFilter_Match_Selector:
-		if change.Match.GetSelector().Name != nil {
-			temp := make([]*networking.HTTPRoute, 0, len(vs.Http))
-			for _, route := range vs.Http {
-				if !change.Match.GetSelector().Name.MatchValue(route.Name) {
-					temp = append(temp, route)
-					continue
-				}
-				applied, err := apply(route, change.Patch)
-				if err != nil {
-					return err
-				}
-				if applied != nil {
-					switch change.Patch.Operation {
-					case v1alpha1.IstioFilter_INSERT_BEFORE:
-						temp = append(temp, applied, route)
-					case v1alpha1.IstioFilter_INSERT_AFTER:
-						temp = append(temp, route, applied)
-					case v1alpha1.IstioFilter_MERGE:
-						temp = append(temp, applied)
-						if route.Name != applied.Name {
-							temp = append(temp, route)
-						}
-					case v1alpha1.IstioFilter_REPLACE:
-						temp = append(temp, applied)
+		if change.Match.GetSelector().Name == nil {
+			return nil
+		}
+		temp := make([]*networking.HTTPRoute, 0, len(vs.Http))
+		for _, route := range vs.Http {
+			if !change.Match.GetSelector().Name.MatchValue(route.Name) {
+				temp = append(temp, route)
+				continue
+			}
+			applied, err := apply(route, change.Patch)
+			if err != nil {
+				return err
+			}
+			if applied != nil {
+				switch change.Patch.Operation {
+				case v1alpha1.IstioFilter_INSERT_BEFORE:
+					temp = append(temp, applied, route)
+				case v1alpha1.IstioFilter_INSERT_AFTER:
+					temp = append(temp, route, applied)
+				case v1alpha1.IstioFilter_MERGE:
+					temp = append(temp, applied)
+					if route.Name != applied.Name {
+						temp = append(temp, route)
 					}
+				case v1alpha1.IstioFilter_REPLACE:
+					temp = append(temp, applied)
 				}
 			}
-			vs.Http = temp
 		}
+		vs.Http = temp
 	}
 	return nil
 }

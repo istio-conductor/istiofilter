@@ -180,6 +180,9 @@ type driveContext struct {
 func (i *IstioFilterController) drive(ctx context.Context, d driveContext) (reconcile.Result, error) {
 	list, err := i.dn.Resource(d.gvr).Namespace(d.targetNs).List(ctx, d.options)
 	if err != nil {
+		if errors.IsNotFound(err) {
+			return reconcile.Result{}, nil
+		}
 		return reconcile.Result{Requeue: true}, nil
 	}
 	allApplied := true
