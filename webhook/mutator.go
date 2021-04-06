@@ -3,6 +3,9 @@ package webhook
 import (
 	"context"
 	"fmt"
+	"istio.io/istio/pkg/config/schema/collection"
+	"istio.io/pkg/log"
+	"k8s.io/apimachinery/pkg/types"
 	"net/http"
 	"time"
 
@@ -83,13 +86,13 @@ func (i *IstioMutator) Mutate(ctx context.Context, ar *model.AdmissionReview, ob
 		if err != nil {
 			return nil, err
 		}
-		oldCfg, err = crd.ConvertObject(schema, ik, "")
+		oldCfg, err = ConvertObject(schema, ik, "")
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	cfg, err := crd.ConvertObject(schema, toIstioKind(un), "")
+	cfg, err := ConvertObject(schema, toIstioKind(un), "")
 	if err != nil {
 		return nil, err
 	}
@@ -180,10 +183,46 @@ func toKubeObject(cfg *config.Config) (*unstructured.Unstructured, error) {
 	un.SetAPIVersion(cfg.GroupVersionKind.GroupVersion())
 	un.SetKind(cfg.GroupVersionKind.Kind)
 	un.SetName(cfg.Name)
+	un.SetUID(types.UID(cfg.UID))
 	un.SetNamespace(namespace)
 	un.SetResourceVersion(cfg.ResourceVersion)
 	un.SetLabels(cfg.Labels)
 	un.SetAnnotations(cfg.Annotations)
+	un.SetOwnerReferences(cfg.OwnerReferences)
 	un.SetCreationTimestamp(metav1.NewTime(cfg.CreationTimestamp))
 	return un, nil
+}
+
+// ConvertObject converts an IstioObject k8s-style object to the internal configuration model.
+func ConvertObject(schema collection.Schema, object crd.IstioObject, domain string) (*config.Config, error) {
+	js, err := json.Marshal(object.GetSpec())
+	if err != nil {
+		return nil, err
+	}
+	spec, err := crd.FromJSON(schema, string(js))
+	if err != nil {
+		return nil, err
+	}
+	status, err := crd.IstioStatusJSONFromMap(object.GetStatus())
+	if err != nil {
+		log.Errorf("could not get istio status from map %v, err %v", object.GetStatus(), err)
+	}
+	meta := object.GetObjectMeta()
+
+	return &config.Config{
+		Meta: config.Meta{
+			GroupVersionKind:  schema.Resource().GroupVersionKind(),
+			Name:              meta.Name,
+			Namespace:         meta.Namespace,
+			Domain:            domain,
+			Labels:            meta.Labels,
+			UID:               string(meta.UID),
+			Annotations:       meta.Annotations,
+			ResourceVersion:   meta.ResourceVersion,
+			OwnerReferences:   meta.OwnerReferences,
+			CreationTimestamp: meta.CreationTimestamp.Time,
+		},
+		Spec:   spec,
+		Status: status,
+	}, nil
 }
