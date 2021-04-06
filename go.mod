@@ -30,6 +30,7 @@ require (
 	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a
 	istio.io/api v0.0.0-20210106050357-a795af9d993e
 	istio.io/istio v0.0.0-20210107030922-8e6386c46ffb
+	istio.io/pkg v0.0.0-20201106170352-6775f12cf100
 	k8s.io/apimachinery v0.20.1
 	k8s.io/client-go v0.20.1
 	sigs.k8s.io/controller-runtime v0.7.0
